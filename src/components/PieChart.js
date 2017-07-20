@@ -47,6 +47,17 @@ class PieChart extends Component {
         this.setState({ chartOptions: chartOptions });
     }
 
+    elementClicked(element) {
+        let index = element[0]._index;
+        let datasetIndex = element[0]._datasetIndex;
+        let legend = element[0]._chart.config.data.datasets[datasetIndex].label;
+        let data = element[0]._chart.config.data.datasets[datasetIndex].data[index];
+        let label = element[0]._chart.config.data.labels[index];
+        console.log('Legend: ', legend);
+        console.log('Label: ', label);
+        console.log('Data Value: ', data);
+    }
+
     render() {
         return (
             <Card fluid>
@@ -72,13 +83,14 @@ class PieChart extends Component {
                                 datasets: [{
                                     label: this.props.legendValue,
                                     data: [
-                                        Math.floor((this.props.currentValue * 100) / this.props.maxValue),
-                                        Math.floor((this.props.maxValue - this.props.currentValue) * 100 / this.props.maxValue)
+                                        Math.round((this.props.currentValue * 100) / this.props.maxValue),
+                                        Math.round((this.props.maxValue - this.props.currentValue) * 100 / this.props.maxValue)
                                     ],
                                     backgroundColor: [this.props.backgroundColor, 'grey']
                                 }]
                             }}
                             options={this.state.chartOptions}
+                            getElementAtEvent={this.elementClicked}
                         />
                     </Card.Description>
                 </Card.Content>

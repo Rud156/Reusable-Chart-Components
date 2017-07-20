@@ -47,6 +47,17 @@ class BarChart extends React.Component {
         this.setState({ chartOptions: chartOptions });
     }
 
+    elementClicked(element) {
+        let index = element[0]._index;
+        let datasetIndex = element[0]._datasetIndex;
+        let legend = element[0]._chart.config.data.datasets[datasetIndex].label;
+        let data = element[0]._chart.config.data.datasets[datasetIndex].data[index];
+        let label = element[0]._chart.config.data.labels[index];
+        console.log('Legend: ', legend);
+        console.log('Label: ', label);
+        console.log('Data Value: ', data);
+    }
+
     render() {
         return (
             <Card fluid>
@@ -76,6 +87,7 @@ class BarChart extends React.Component {
                                 }]
                             }}
                             options={this.state.chartOptions}
+                            getElementAtEvent={this.elementClicked}
                         />
                     </Card.Description>
                 </Card.Content>
